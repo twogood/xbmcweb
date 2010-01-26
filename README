@@ -1,0 +1,5 @@
+VERY simple web interface to XBMC, using the XBMC Web Server HTTP API:
+http://xbmc.org/wiki/?title=WebServerHTTP-API
+
+Depends on ZendFramework-1.9.7 and the cURL PHP extension.
+
