@@ -1,0 +1,45 @@
+<h1>XBMC Control</h1>
+
+<p><img width="<?= 
+$this->screenshotWidth 
+?>" height="<?= 
+$this->screenshotHeight 
+?>" src="<?= 
+$this->url(array('action' => 'screenshot')) 
+?>" alt="Screenshot"/></p>
+
+<p>Currently <strong><?=$this->currentlyPlaying['PlayStatus'] ?></strong>
+<?=$this->currentlyPlaying['Filename'] ?></p>
+
+<p>
+<a href="<?= $this->url(array('action' => 'pause'))?>">Pause</a>
+<a href="<?= $this->url(array('action' => 'resume'))?>">Resume</a>
+<a href="<?= $this->url(array('action' => 'stop'))?>" onclick="if (confirm('Are you sure?')) { var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;f.submit(); };return false;">Stop</a>
+<a href="<?= $this->url(array('action' => 'shutdown'))?>" onclick="if (confirm('Are you sure?')) { var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;f.submit(); };return false;">Shutdown</a>
+
+</p>
+
+<form action="<?= $this->url(array('action' => 'play')) ?>">
+
+<p><input type="text" name="path"/><input type="submit" value="Play"/></p>
+
+
+</form>
+
+<h2>Notification</h2>
+
+<form action="<?= $this->url(array('action' => 'notification')) ?>">
+
+<p><input type="text" name="header"/></p>
+<p><textarea name="message">
+</textarea></p>
+
+<input type="submit" value="Show"/>
+
+</form>
+
+<pre>
+<?php var_dump($this->currentlyPlaying);?>
+</pre>
+
+
