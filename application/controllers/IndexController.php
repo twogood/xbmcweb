@@ -8,7 +8,7 @@ class IndexController extends Zend_Controller_Action
   {
     $this->_redirector = $this->_helper->getHelper('Redirector');
 
-    $this->xbmc = new Default_Model_Xbmc();
+    $this->xbmc = new Default_Service_Xbmc();
 
     $this->view->screenshotWidth = 300;
     $this->view->screenshotHeight = 200;

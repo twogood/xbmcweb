@@ -1,6 +1,6 @@
 <?php
 
-class Default_Model_Xbmc
+class Default_Service_Xbmc
 {
   private $isRunning = true;
 
