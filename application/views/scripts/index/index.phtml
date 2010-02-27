@@ -12,6 +12,7 @@ $this->url(array('action' => 'screenshot'))
 <?=$this->currentlyPlaying['Filename'] ?></p>
 
 <p>
+<a href="<?= $this->url(array('action' => 'mute'))?>">Mute</a>
 <a href="<?= $this->url(array('action' => 'pause'))?>">Pause</a>
 <a href="<?= $this->url(array('action' => 'resume'))?>">Resume</a>
 <a href="<?= $this->url(array('action' => 'stop'))?>" onclick="if (confirm('Are you sure?')) { var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;f.submit(); };return false;">Stop</a>

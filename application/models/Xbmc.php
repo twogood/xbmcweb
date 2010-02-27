@@ -77,6 +77,12 @@ class Default_Model_Xbmc
     return $this->sendCommand("ExecBuiltIn(Notification($header,$message,$time,$image))");
   }
 
+  // http://xbox/xbmcCmds/xbmcHttp?command=Mute()
+  public function mute()
+  {
+    $result = $this->sendCommand('Mute()');
+  }
+
 }
 
 

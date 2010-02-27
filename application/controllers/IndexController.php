@@ -63,8 +63,15 @@ class IndexController extends Zend_Controller_Action
       return;
     } 
 
+    $width = $this->_getParam('w');
+    $height = $this->_getParam('h');
+    if (!$width)
+      $width = $this->view->screenshotWidth;
+    if (!$height)
+      $height = $this->view->screenshotHeight;
+
     $result = implode(explode(']', $this->xbmc->sendCommand(
-      'takescreenshot(;false;0;'.$this->view->screenshotWidth.';'.$this->view->screenshotHeight.';90;true)')));
+      'takescreenshot(;false;0;'.$width.';'.$height.';90;true)')));
     $this->_helper->layout->disableLayout();
     $this->getResponse()
       ->setHeader('Content-Type', 'image/jpeg; charset=binary')
@@ -97,6 +104,16 @@ class IndexController extends Zend_Controller_Action
   public function shutdownAction()
   {
     $this->xbmc->sendCommand('shutdown()');
+    $this->_redirector->gotoRoute(
+      array(
+        'action' => 'index',
+      )
+    );
+  }
+
+  public function muteAction()
+  {
+    $this->xbmc->mute();
     $this->_redirector->gotoRoute(
       array(
         'action' => 'index',
