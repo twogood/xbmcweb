@@ -30,11 +30,13 @@ class Default_Service_Xbmc
     if ($this->isRunning === false)
       return false;
 
-    curl_setopt($this->curl, CURLOPT_URL, "http://xbox/xbmcCmds/xbmcHttp?command=".urlencode($command));
+    $url = "http://xbox/xbmcCmds/xbmcHttp?command=".urlencode($command);
+    curl_setopt($this->curl, CURLOPT_URL, $url);
     $result = curl_exec($this->curl);
     if ($result === false)
     {
       $this->isRunning = false;
+      //throw new Exception(curl_error($this->curl) . ' ' . $url);
     }
     return $result;
   }
@@ -77,10 +79,75 @@ class Default_Service_Xbmc
     return $this->sendCommand("ExecBuiltIn(Notification($header,$message,$time,$image))");
   }
 
+  /*
   // http://xbox/xbmcCmds/xbmcHttp?command=Mute()
   public function mute()
   {
     $result = $this->sendCommand('Mute()');
+  }
+   */
+  
+  protected function getLog($filename)
+  {
+    if ($this->isRunning === false)
+      return false;
+
+    return file_get_contents('ftp://xbox:xbox@xbox/E/Apps/XBMC/' . $filename);
+  }
+
+  public function getCurrentLog()
+  {
+    return $this->getLog('xbmc.log');
+  }
+
+  public function getOldLog()
+  {
+    return $this->getLog('xbmc.old.log');
+  }
+
+  public function __call($name, $arguments) 
+  {
+    $command = $name . '(';
+
+    $first = true;
+    foreach ($arguments as $argument)
+    {
+      if ($first)
+        $first = false;
+      else
+        $command .= ';';
+
+      if ($argument == '')
+      {
+        // To pass an empty parameter insert a space between the semi-colons "; ;". 
+        $argument = ' ';
+      }
+      else
+      {
+        // To pass a semi-colon as a parameter (rather than a separator) use two semi-colons ";;". 
+        $argument = str_replace(';', ';;', $argument);
+      }
+
+      $command .= $argument;
+    }
+
+    $command .= ')';
+
+    //var_dump($command);
+    $result = $this->sendCommand($command);
+    if ($result === false)
+      return false;
+
+    $result = self::splitXbmcResult();
+    var_dump($result);
+    array_shift($result); // first element is empty
+    array_pop($result);   // last element is empty
+    if (count($result) == 0)
+      return null;
+    else if (count($result) == 1)
+      return $result[0];
+    else
+      return $result;
   }
 
 }

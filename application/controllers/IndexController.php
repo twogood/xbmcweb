@@ -51,6 +51,8 @@ class IndexController extends Zend_Controller_Action
     }
 
     $this->view->currentlyPlaying = $this->xbmc->getCurrentlyPlaying();
+    $volume = $this->xbmc->getVolume();
+    $this->view->volume = $volume;
   }
 
   public function screenshotAction()
@@ -130,6 +132,44 @@ class IndexController extends Zend_Controller_Action
         'action' => 'index',
       )
     );
+  }
+
+  public function setVolumeAction()
+  {
+    $volume = (int)$this->_getParam('volume');
+    if ($volume >= 0 && $volume <= 100)
+    {
+      $this->xbmc->setVolume($volume);
+    }
+
+    $this->_redirector->gotoRoute(
+      array(
+        'action' => 'index',
+      )
+    );
+  }
+
+  public function logAction()
+  {
+    $version = $this->_getParam('version');
+
+    switch ($version)
+    {
+    case 'current':
+    case null:
+      $log = $this->xbmc->getCurrentLog();
+      break;
+
+    case 'old':
+      $log = $this->xbmc->getOldLog();
+      break;
+
+    default:
+      // TODO: error bad request, or something
+    }
+
+    $this->view->log = $log;
+    $this->view->logLevel = $this->xbmc->getLogLevel();
   }
 
 }

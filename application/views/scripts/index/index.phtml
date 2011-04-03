@@ -21,11 +21,14 @@ $this->url(array('action' => 'screenshot'))
 </p>
 
 <form action="<?= $this->url(array('action' => 'play')) ?>">
-
 <p><input type="text" name="path"/><input type="submit" value="Play"/></p>
-
-
 </form>
+
+<form action="<?= $this->url(array('action' => 'set-volume')) ?>">
+<p><input type="text" name="volume" value="<?= $this->volume ?>"/><input type="submit" value="Set volume"/></p>
+</form>
+
+
 
 <h2>Notification</h2>
 
@@ -43,4 +46,6 @@ $this->url(array('action' => 'screenshot'))
 <?php var_dump($this->currentlyPlaying);?>
 </pre>
 
-
+<p>
+<a href="<?= $this->url(array('action' => 'log'))?>">Show logs</a>
+</p>

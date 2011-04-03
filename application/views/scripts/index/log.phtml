@@ -1,0 +1,14 @@
+<h2>Log</h2>
+
+<p>
+<a href="<?= $this->url(array('version' => 'current'))?>">Start</a>
+<a href="<?= $this->url(array('version' => 'current'))?>">Current log</a>
+<a href="<?= $this->url(array('version' => 'old'))?>">Old log</a>
+</p>
+
+<form action="<?= $this->url(array('action' => 'set-log-level')) ?>">
+<p><input type="text" name="logLevel" value="<?= $this->logLevel ?>"/><input type="submit" value="Set log level"/></p>
+</form>
+
+
+<pre><?= $this->log ?></pre>
